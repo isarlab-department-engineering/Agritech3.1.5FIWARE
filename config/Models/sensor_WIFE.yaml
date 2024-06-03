@@ -1,0 +1,25 @@
+#Device Creation
+"Sensor":
+  "Creation":{
+    "id": "",
+    "name": "",
+    "type": "",
+    "deviceCategory": [],
+    "controlledProperty": [],
+    "dateInstalled": "",
+    "location": {
+        "type": "Point",
+        "coordinates": []
+    }
+  }
+  "Update":{
+    "id": "",
+    "type": "",
+    "value": "",
+    "dateObserved": "",
+
+    "location": {
+      "type": "Point",
+      "coordinates": [ ]
+    }
+  }

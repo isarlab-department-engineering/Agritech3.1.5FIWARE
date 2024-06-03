@@ -1,0 +1,11 @@
+# SAP Device
+{
+    "id":{
+         "prefix":"urn:ngsi-ld:Device:unipg:",
+         "mapping":"id",
+        },
+    "name": "Lymphatic Flow",
+    "type": "Device",
+    "deviceCategory": ["sensor"],
+    "controlledProperty": ["sapflow"],
+}

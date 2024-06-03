@@ -1,0 +1,11 @@
+# FDR sensor Device
+{
+    "id":{
+           "prefix":"urn:ngsi-ld:Device:unipg:",
+           "mapping":"id",
+          },
+    "name": "Frequency Domain Reflectometry",
+    "type": "Device",
+    "deviceCategory": [ "sensor" ],
+    "controlledProperty": [ "fdr" ]
+}
