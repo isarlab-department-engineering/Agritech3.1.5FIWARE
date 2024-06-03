@@ -1,0 +1,7 @@
+"CONFIG":{
+  "config_file":"fdr.yaml",
+  "id":"urn:ngsi-ld:Device:unipg:fdr003",
+  "location": {
+    "coordinates": []
+  }
+}

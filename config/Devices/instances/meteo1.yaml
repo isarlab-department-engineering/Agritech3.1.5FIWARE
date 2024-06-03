@@ -1,0 +1,7 @@
+"CONFIG": {
+  "config_file":"meteo.yaml",
+  "id":"urn:ngsi-ld:Device:unipg:wth001",
+  "location": {
+    "coordinates": [ ]
+  }
+}

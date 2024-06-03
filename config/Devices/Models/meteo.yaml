@@ -1,9 +1,5 @@
 # Meteo station Device
 {
-    "id":{
-         "prefix":"urn:ngsi-ld:Device:unipg:",
-         "mapping":"id",
-        },
     "name": "Weather Station",
     "type": "Device",
     "deviceCategory": ["sensor"],
