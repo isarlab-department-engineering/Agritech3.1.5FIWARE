@@ -10,8 +10,6 @@ from pathlib import Path
 from datetime import datetime
 import os
 
-
-
 #####################################################
 # SETTINGS LOADING                                  #
 #####################################################
@@ -25,7 +23,7 @@ SENS_DIR = Path(ROOT_DIR, *config_session["PATH"]["instances"])
 SENS_MODEL_DIR = Path(ROOT_DIR, *config_session["PATH"]["model"])
 
 # Create out folder and logging
-study_name = "".join(["WIFE_CREATION", "_", datetime.now().strftime("%d_%m_%Y_%H_%M_%S")])
+study_name = "".join(["WIFE_UPDATE", "_", datetime.now().strftime("%d_%m_%Y_%H_%M_%S")])
 OUT_SESS_DIR = FolderCreator(Path(OUTPUT_DIR, study_name))
 logger = setup_logging(OUT_SESS_DIR.get_path())
 

@@ -4,6 +4,16 @@ import yaml
 from datetime import datetime
 from pathlib import Path
 import logging
+import argparse
+
+
+# Parse the arguments and extract the indexes
+def update_parser():
+    parser = argparse.ArgumentParser(description='Parser for updatind sensor. Note the mapper.yaml file is needed')
+    parser.add_argument('--dataset', type=str, required=True,
+                        help='xlsx Dataset and mapper.yaml folder path')
+
+    return parser
 
 
 def setup_logging(log_out_path: Path):
@@ -51,18 +61,19 @@ def save_dict_to_yaml(data, yaml_filename, savedir):
     outfilename = Path(savedir, yaml_filename).__str__()
     with open(outfilename, "w") as yamlfile:
         # Dump the YAML data to the file
-        def represent_list(dumper, data):
-            return dumper.represent_sequence(u'tag:yaml.org,2002:seq', data, flow_style=True)
+        def represent_list(dumper, dataa):
+            return dumper.represent_sequence(u'tag:yaml.org,2002:seq', dataa, flow_style=True)
 
             # Custom representer for dict to handle dictionaries appropriately
 
-        def represent_dict(dumper, data):
-            return dumper.represent_mapping(u'tag:yaml.org,2002:map', data.items())
+        def represent_dict(dumper, dataa):
+            return dumper.represent_mapping(u'tag:yaml.org,2002:map', dataa.items())
 
         yaml.add_representer(list, represent_list, Dumper=yaml.SafeDumper)
         yaml.add_representer(dict, represent_dict, Dumper=yaml.SafeDumper)
 
         yaml.safe_dump(data, yamlfile, default_flow_style=False, sort_keys=False, default_style=" ")
+
 
 class FolderCreator:
     def __init__(self, path):
