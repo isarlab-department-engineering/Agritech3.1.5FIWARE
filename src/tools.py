@@ -1,45 +1,68 @@
 import os
 import sys
 import yaml
+from datetime import datetime
 from pathlib import Path
-import json
 import logging
 
 
-class LoggerParser:
-    @staticmethod
-    def setup_logging(save_dir, log_config,  default_level=logging.INFO):
-        """
-        Setup logger
-        """
-        log_config = Path(log_config)
-        save_dir = Path(save_dir)
+def setup_logging(log_out_path: Path):
+    # Create Folder session out
+    now = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    out_file = os.path.join(str(log_out_path), "".join(["log_", now, "_.log"]))
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    fh = logging.FileHandler(out_file)
+    fh.setLevel(logging.DEBUG)
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.ERROR)
+
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                                  datefmt='%d-%b-%y %H:%M:%S')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+
+    # add the handlers to the logger
+    logger.addHandler(fh)
+    logger.addHandler(ch)
+
+    logger.info("Session started")
+    return logger
+
+
+def get_yaml_config(yaml_path):
+    with open(yaml_path, "r") as stream:
         try:
-            conf = json.load(open(log_config))
-            # modify logger paths based on run configs
-            for _, handler in conf['LOGGING']['handlers'].items():
-                if 'filename' in handler:
-                    handler['filename'] = str(os.path.join(save_dir, handler['filename']))
-            logging.config.dictConfig(conf['LOGGING'])
-        except FileNotFoundError as e:
-            print("Unable to open the .json file {}, the returned error is: \n\t->{}".format(log_config, e))
-            logging.basicConfig(level=default_level)
-        except Exception as e:
-            print("An error occur while setting up the logging: \n\t->{}".format(e))
-            logging.basicConfig(level=default_level)
+            config_loaded = yaml.safe_load(stream)
+        except yaml.YAMLError:
+            msg = "Error while loading the yaml file : {}".format(yaml_path)
+            logging.error(msg)
+            sys.exit(1)
+    return config_loaded
 
 
-class YamlParser:
-    @staticmethod
-    def get_config(yaml_path):
-        with open(yaml_path, "r") as stream:
-            try:
-                config_loaded = yaml.safe_load(stream)
-            except yaml.YAMLError:
-                msg = "Error while loading the yaml file : {}".format(yaml_path)
-                logging.error(msg)
-                sys.exit(1)
-        return config_loaded
+def save_dict_to_yaml(data, yaml_filename, savedir):
+    check_folder(savedir)
+    outfilename = Path(savedir, yaml_filename).__str__()
+    with open(outfilename, "w") as yamlfile:
+        # Dump the YAML data to the file
+        def represent_list(dumper, data):
+            return dumper.represent_sequence(u'tag:yaml.org,2002:seq', data, flow_style=True)
+
+            # Custom representer for dict to handle dictionaries appropriately
+
+        def represent_dict(dumper, data):
+            return dumper.represent_mapping(u'tag:yaml.org,2002:map', data.items())
+
+        yaml.add_representer(list, represent_list, Dumper=yaml.SafeDumper)
+        yaml.add_representer(dict, represent_dict, Dumper=yaml.SafeDumper)
+
+        yaml.safe_dump(data, yamlfile, default_flow_style=False, sort_keys=False, default_style=" ")
 
 class FolderCreator:
     def __init__(self, path):
@@ -50,3 +73,24 @@ class FolderCreator:
             msg = ''.join(["Error while creating the folder for containing images: ", str(self.path), "\n", str(e)])
             print(msg)
             sys.exit(1)
+
+    def get_path(self):
+        return self.path
+
+
+def check_file(file_path_str):
+    if not os.path.isfile(file_path_str):
+        message = "File {} NOT found".format(file_path_str)
+        logging.debug(message)
+        return False
+    else:
+        return True
+
+
+def check_folder(folder_path):
+    if not Path(folder_path).exists():
+        message = "Folder {} NOT found".format(folder_path)
+        logging.debug(message)
+        return False
+    else:
+        return True

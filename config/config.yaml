@@ -1,0 +1,7 @@
+{ "PATH": {
+  "instances": [ "config","devices","instances" ],
+  "model": [ "config","devices","models" ],
+  "out": [ "out" ]
+  }
+
+}

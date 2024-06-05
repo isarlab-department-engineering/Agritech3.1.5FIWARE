@@ -1,6 +1,6 @@
 # WIFIRE DEVICE
-"Sensor":
-  "Creation":{
+{
+  "CREATION": {
     "id": "",
     "name": "",
     "type": "",
@@ -8,11 +8,12 @@
     "controlledProperty": [],
     "dateInstalled": "",
     "location": {
-        "type": "Point",
-        "coordinates": []
+      "type": "Point",
+      "coordinates": []
     }
-  }
-  "Update":{
+  },
+
+  "UPDATE": {
     "id": "",
     "type": "",
     "value": "",
@@ -22,3 +23,5 @@
       "coordinates": [ ]
     }
   }
+
+}

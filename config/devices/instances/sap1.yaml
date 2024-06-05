@@ -1,4 +1,4 @@
-"CONFIG":{
+{
   "config_file":"sap.yaml",
   "id":"urn:ngsi-ld:Device:unipg:sap001",
   "location": {

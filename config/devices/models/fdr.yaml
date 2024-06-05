@@ -2,6 +2,6 @@
 {
     "name": "Frequency Domain Reflectometry",
     "type": "Device",
-    "deviceCategory": [ "sensor" ],
-    "controlledProperty": [ "fdr" ]
+    "deviceCategory": ["sensor"],
+    "controlledProperty": ["fdr"]
 }

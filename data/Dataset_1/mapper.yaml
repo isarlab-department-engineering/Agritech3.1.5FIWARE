@@ -6,22 +6,22 @@ DEVICES:
         "coordinatesProperty":[""]
     "002":
         "id": "urn:ngsi-ld:Device:unipg:sap002",
-        "controlledProperty": [ "SAP4" ]
-        "coordinatesProperty": [ "" ]
+        "controlledProperty": ["SAP4"]
+        "coordinatesProperty": [""]
     "003":
         "id": "urn:ngsi-ld:Device:unipg:fdr001",
-        "controlledProperty": [ "FDR2" ]
-        "coordinatesProperty": [ "" ]
+        "controlledProperty": ["FDR2"]
+        "coordinatesProperty": [""]
     "004":
         "id": "urn:ngsi-ld:Device:unipg:fdr002",
         "controlledProperty": [ "FDR3" ]
         "coordinatesProperty": [ "" ]
     "005":
         "id": "urn:ngsi-ld:Device:unipg:fdr003",
-        "controlledProperty": [ "FDR3" ]
-        "coordinatesProperty": [ "" ]
+        "controlledProperty": ["FDR3"]
+        "coordinatesProperty": [""]
     "006":
         "id": "urn:ngsi-ld:Device:unipg:wth001",
-        "controlledProperty": [ "TA avg", "RH MP100 avg", "Rn avg", "Wind avg", "Eto", "Irrigazione_e_pioggia" ]
-        "coordinatesProperty": [ "" ]
+        "controlledProperty": ["TA avg", "RH MP100 avg", "Rn avg", "Wind avg", "Eto", "Irrigazione_e_pioggia" ]
+        "coordinatesProperty": [""]
 }
