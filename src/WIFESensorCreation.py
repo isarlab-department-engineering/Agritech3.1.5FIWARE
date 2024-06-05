@@ -3,8 +3,6 @@ Code for generating the WIFE sensor instances.
 It generates the YAML code for creating WIFE sensor instances
 from the config files in config/devices/instances.
 """
-import logging
-
 from config import ROOT_DIR, CONFIG_DIR
 from tools import FolderCreator, setup_logging, get_yaml_config, check_file, check_folder, save_dict_to_yaml
 from pathlib import Path
@@ -66,6 +64,12 @@ for _, _, files in os.walk(SENS_DIR, topdown=True):
             if key in sensor_creation_dict:
                 sensor_creation_dict[key] = sensor_instance[key]
 
-        # Create the sensor
+        # Create the sensor yaml
         logger.info("Creating the yaml configuration for {} ...".format(file))
         save_dict_to_yaml(data=sensor_creation_dict, yaml_filename=file, savedir=OUT_SESS_DIR.get_path())
+
+# Done, Ciao, Addio
+logger.info("Done ...")
+
+# TODO: ADD
+#        - CHECKING FOR CREATION DATE AND DATETIME FORMAT -> TIMESTAMPS UNIX
