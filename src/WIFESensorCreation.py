@@ -45,13 +45,13 @@ logger.info("processing started")
 for _, _, files in os.walk(SENS_DIR, topdown=True):
     for file in files:
         # Load yaml for each device instances
-        sensor_yaml = Path(SENS_DIR, file).__str__()
+        sensor_json = Path(SENS_DIR, file).__str__()
         logger.info("processing sensor instance: {}".format(file))
 
         # Load the  dictionary of the instance
-        sensor_instance = get_json_config(sensor_yaml)
-        sensor_model_yaml = Path(SENS_MODEL_DIR, sensor_instance["config_file"])
-        sensor_model = get_json_config(sensor_model_yaml)
+        sensor_instance = get_json_config(sensor_json)
+        sensor_model_json = Path(SENS_MODEL_DIR, sensor_instance["config_file"])
+        sensor_model = get_json_config(sensor_model_json)
 
         # We update the sensor instance dictionary with the model
         sensor_instance.update(sensor_model)

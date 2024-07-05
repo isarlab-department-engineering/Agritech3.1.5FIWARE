@@ -1,6 +1,9 @@
 import os
 import sys
 import json
+
+import pandas.errors
+import pandas as pd
 import yaml
 from datetime import datetime
 from pathlib import Path
@@ -50,8 +53,8 @@ def get_yaml_config(yaml_path):
     with open(yaml_path, "r") as stream:
         try:
             config_loaded = yaml.safe_load(stream)
-        except yaml.YAMLError:
-            msg = "Error while loading the yaml file : {}".format(yaml_path)
+        except yaml.YAMLError as e:
+            msg = "Error while loading the yaml file : {}".format(e)
             logging.error(msg)
             sys.exit(1)
     return config_loaded
@@ -78,24 +81,49 @@ def get_json_config(json_path):
             sys.exit(1)
     return config_loaded
 
-# def save_dict_to_yaml(data, yaml_filename, savedir):
-#     check_folder(savedir)
-#     outfilename = Path(savedir, yaml_filename).__str__()
-#     with open(outfilename, "w") as yamlfile:
-#         # Dump the YAML data to the file
-#         def represent_list(dumper, dataa):
-#             return dumper.represent_sequence(u'tag:yaml.org,2002:seq', dataa, flow_style=True)
-#
-#             # Custom representer for dict to handle dictionaries appropriately
-#
-#         def represent_dict(dumper, dataa):
-#             return dumper.represent_mapping(u'tag:yaml.org,2002:map', dataa.items())
-#
-#         yaml.add_representer(list, represent_list, Dumper=yaml.SafeDumper)
-#         yaml.add_representer(dict, represent_dict, Dumper=yaml.SafeDumper)
-#
-#         yaml.safe_dump(data, yamlfile, default_flow_style=False, sort_keys=False, default_style=" ")
 
+def load_dataset_to_df(path_dataset) -> pd.DataFrame:
+    """Loads the data files from Excel file (xlsx).
+
+    Args:
+        path_dataset: The path to the xlsx dataset file.
+
+    Returns:
+        A DataFrame containing the  data.
+
+    Raises:
+        SystemExit: If an error occurs loading dataset.
+    """
+
+    try:
+        dataframe = pd.read_excel(path_dataset, index_col=0)
+    except FileNotFoundError:
+        msg = "File {} not found while loading the dataset".format(path_dataset)
+        logging.error(msg)
+        sys.exit(1)
+    except pandas.errors.DataError as e:
+        msg = "Error while loading the data from file file: {} \n->{} ".format(path_dataset, e)
+        logging.error(msg)
+        sys.exit(1)
+    return dataframe
+
+
+def datetime_to_iso8601(datetime_str):
+    """Converts a datetime string in the format 'YYYY-MM-DD HH:MM:SS' to ISO 8601.
+
+    Args:
+        datetime_str: The datetime string to convert.
+
+    Returns:
+        The datetime string in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ).
+    """
+    try:
+        dt_object = datetime.strptime(datetime_str, "%Y-%m-%d %H:%M:%S")
+        return dt_object.isoformat() + "Z"  # Add 'Z' for UTC timezone
+    except ValueError:
+        msg = "Error while converting {} to ISO 8601 ".format(datetime_str)
+        logging.error(msg)
+        sys.exit(1)
 
 def save_dict_to_json(data, json_filename, savedir):
     check_folder(savedir)
@@ -104,7 +132,6 @@ def save_dict_to_json(data, json_filename, savedir):
         # Dump the YAML data to the file
         json.dump(data, json_file, indent=1, sort_keys=False, separators=(',', ':'))
 
-
 class FolderCreator:
     def __init__(self, path):
         self.path = os.path.abspath(path)
@@ -112,7 +139,7 @@ class FolderCreator:
             os.mkdir(self.path)
         except Exception as e:
             msg = ''.join(["Error while creating the folder for containing images: ", str(self.path), "\n", str(e)])
-            print(msg)
+            logging.error(msg)
             sys.exit(1)
 
     def get_path(self):

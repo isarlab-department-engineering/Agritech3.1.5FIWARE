@@ -2,6 +2,6 @@
   "config_file":"meteo.json",
   "id":"urn:ngsi-ld:Device:unipg:wth001",
   "location": {
-    "coordinates": [ ]
+    "coordinates": []
   }
 }
