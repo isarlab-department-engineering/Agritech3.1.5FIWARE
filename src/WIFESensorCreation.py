@@ -4,7 +4,7 @@ It generates the YAML code for creating WIFE sensor instances
 from the config files in config/devices/instances.
 """
 from config import ROOT_DIR, CONFIG_DIR
-from tools import FolderCreator, setup_logging, get_yaml_config, check_file, check_folder, save_dict_to_yaml
+from tools import FolderCreator, setup_logging, get_yaml_config, check_file, check_folder, save_dict_to_json
 from pathlib import Path
 from datetime import datetime
 import os
@@ -66,7 +66,7 @@ for _, _, files in os.walk(SENS_DIR, topdown=True):
 
         # Create the sensor yaml
         logger.info("Creating the yaml configuration for {} ...".format(file))
-        save_dict_to_yaml(data=sensor_creation_dict, yaml_filename=file, savedir=OUT_SESS_DIR.get_path())
+        save_dict_to_json(data=sensor_creation_dict, json_filename=file, savedir=OUT_SESS_DIR.get_path())
 
 # Done, Ciao, Addio
 logger.info("Done ...")

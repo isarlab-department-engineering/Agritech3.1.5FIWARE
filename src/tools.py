@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import yaml
 from datetime import datetime
 from pathlib import Path
@@ -56,23 +57,31 @@ def get_yaml_config(yaml_path):
     return config_loaded
 
 
-def save_dict_to_yaml(data, yaml_filename, savedir):
+# def save_dict_to_yaml(data, yaml_filename, savedir):
+#     check_folder(savedir)
+#     outfilename = Path(savedir, yaml_filename).__str__()
+#     with open(outfilename, "w") as yamlfile:
+#         # Dump the YAML data to the file
+#         def represent_list(dumper, dataa):
+#             return dumper.represent_sequence(u'tag:yaml.org,2002:seq', dataa, flow_style=True)
+#
+#             # Custom representer for dict to handle dictionaries appropriately
+#
+#         def represent_dict(dumper, dataa):
+#             return dumper.represent_mapping(u'tag:yaml.org,2002:map', dataa.items())
+#
+#         yaml.add_representer(list, represent_list, Dumper=yaml.SafeDumper)
+#         yaml.add_representer(dict, represent_dict, Dumper=yaml.SafeDumper)
+#
+#         yaml.safe_dump(data, yamlfile, default_flow_style=False, sort_keys=False, default_style=" ")
+
+
+def save_dict_to_json(data, json_filename, savedir):
     check_folder(savedir)
-    outfilename = Path(savedir, yaml_filename).__str__()
-    with open(outfilename, "w") as yamlfile:
+    outfilename = Path(savedir, json_filename).__str__()
+    with open(outfilename, "w") as json_file:
         # Dump the YAML data to the file
-        def represent_list(dumper, dataa):
-            return dumper.represent_sequence(u'tag:yaml.org,2002:seq', dataa, flow_style=True)
-
-            # Custom representer for dict to handle dictionaries appropriately
-
-        def represent_dict(dumper, dataa):
-            return dumper.represent_mapping(u'tag:yaml.org,2002:map', dataa.items())
-
-        yaml.add_representer(list, represent_list, Dumper=yaml.SafeDumper)
-        yaml.add_representer(dict, represent_dict, Dumper=yaml.SafeDumper)
-
-        yaml.safe_dump(data, yamlfile, default_flow_style=False, sort_keys=False, default_style=" ")
+        json.dump(data, json_file, indent=1, sort_keys=False, separators=(',', ':'))
 
 
 class FolderCreator:
