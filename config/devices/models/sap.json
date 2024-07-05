@@ -1,7 +1,6 @@
-# SAP Device
 {
     "name": "Lymphatic Flow",
     "type": "Device",
     "deviceCategory": ["sensor"],
-    "controlledProperty": ["sapflow"],
+    "controlledProperty": ["sapflow"]
 }

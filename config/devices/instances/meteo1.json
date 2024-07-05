@@ -1,5 +1,5 @@
 {
-  "config_file":"meteo.yaml",
+  "config_file":"meteo.json",
   "id":"urn:ngsi-ld:Device:unipg:wth001",
   "location": {
     "coordinates": [ ]

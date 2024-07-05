@@ -1,5 +1,5 @@
 {
-  "config_file":"sap.yaml",
+  "config_file":"sap.json",
   "id":"urn:ngsi-ld:Device:unipg:sap002",
   "location": {
     "coordinates": []

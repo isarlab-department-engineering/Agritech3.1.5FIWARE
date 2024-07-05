@@ -1,5 +1,5 @@
 {
-  "config_file":"fdr.yaml",
+  "config_file":"fdr.json",
   "id":"urn:ngsi-ld:Device:unipg:fdr001",
   "location": {
     "coordinates": []

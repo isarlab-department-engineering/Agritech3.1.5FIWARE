@@ -4,7 +4,7 @@ It generates the YAML code for creating WIFE sensor instances
 from the config files in config/devices/instances.
 """
 from config import ROOT_DIR, CONFIG_DIR
-from tools import FolderCreator, setup_logging, get_yaml_config, check_file, check_folder, save_dict_to_json
+from tools import FolderCreator, setup_logging, get_json_config, get_yaml_config, check_file, check_folder, save_dict_to_json
 from pathlib import Path
 from datetime import datetime
 import os
@@ -33,9 +33,9 @@ logger.info("checking instances on: {}".format(SENS_MODEL_DIR))
 check_folder(SENS_MODEL_DIR)
 
 # Get the sensor model templates
-yaml_path_model_templates = Path(SENS_MODEL_DIR, "sensor_WIFE.yaml")
+yaml_path_model_templates = Path(SENS_MODEL_DIR, "sensor_WIFE.json")
 check_file(yaml_path_model_templates)
-model_template_dict = get_yaml_config(yaml_path_model_templates.__str__())
+model_template_dict = get_json_config(yaml_path_model_templates.__str__())
 
 # Set the creation template
 model_template_dict = model_template_dict["CREATION"]
@@ -49,9 +49,9 @@ for _, _, files in os.walk(SENS_DIR, topdown=True):
         logger.info("processing sensor instance: {}".format(file))
 
         # Load the  dictionary of the instance
-        sensor_instance = get_yaml_config(sensor_yaml)
+        sensor_instance = get_json_config(sensor_yaml)
         sensor_model_yaml = Path(SENS_MODEL_DIR, sensor_instance["config_file"])
-        sensor_model = get_yaml_config(sensor_model_yaml)
+        sensor_model = get_json_config(sensor_model_yaml)
 
         # We update the sensor instance dictionary with the model
         sensor_instance.update(sensor_model)

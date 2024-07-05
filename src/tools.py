@@ -57,6 +57,27 @@ def get_yaml_config(yaml_path):
     return config_loaded
 
 
+def get_json_config(json_path):
+    """Loads configuration data from a JSON file.
+
+    Args:
+        json_path: The path to the JSON configuration file.
+
+    Returns:
+        A dictionary containing the configuration data.
+
+    Raises:
+        SystemExit: If an error occurs during JSON parsing.
+    """
+    with open(json_path, "r") as f:
+        try:
+            config_loaded = json.load(f)
+        except json.JSONDecodeError as e:
+            msg = "Error while loading the JSON file: {} \n->{} ".format(json_path, e)
+            logging.error(msg)
+            sys.exit(1)
+    return config_loaded
+
 # def save_dict_to_yaml(data, yaml_filename, savedir):
 #     check_folder(savedir)
 #     outfilename = Path(savedir, yaml_filename).__str__()
